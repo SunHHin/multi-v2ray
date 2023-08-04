@@ -192,7 +192,7 @@ downloadV2Ray(){
     mkdir -p /tmp/$key_lower
     local pack_name=$key_lower
     [[ $key == "Xray" ]] && pack_name=$key
-    download_link="https://github.com/$repos/releases/download/${new_ver}/${pack_name}-linux-${machine}.zip"
+    download_link="https://ghproxy.com/https://github.com/$repos/releases/download/${new_ver}/${pack_name}-linux-${machine}.zip"
     colorEcho ${blue} "Downloading $key: ${download_link}"
     curl ${proxy} -L -H "Cache-Control: no-cache" -o ${zipfile} ${download_link}
     if [ $? != 0 ];then
@@ -270,7 +270,7 @@ getVersion(){
         [[ -z $ver ]] && ver="$(/usr/bin/$key_lower/$key_lower version 2>/dev/null)"
         retval=$?
         cur_ver="$(normalizeVersion "$(echo "$ver" | head -n 1 | cut -d " " -f2)")"
-        tag_url="https://api.github.com/repos/$repos/releases/latest"
+        tag_url="https://ghproxy.com/https://api.github.com/repos/$repos/releases/latest"
         new_ver="$(normalizeVersion "$(curl ${proxy} -H "Accept: application/json" -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0" -s "${tag_url}" --connect-timeout 10| grep 'tag_name' | cut -d\" -f4)")"
 
         if [[ $? -ne 0 ]] || [[ $new_ver == "" ]]; then
